@@ -49,7 +49,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define BACKLIGHT_LEVELS 6
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 1
+#define DEBOUNCE 10
+#define DEBOUNCE_TYPE sym_defer_pk
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
@@ -81,3 +82,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define RGBLIGHT_HUE_STEP 12 // units to step when in/decreasing hue
 // #define RGBLIGHT_SAT_STEP 25 // units to step when in/decresing saturation
 // #define RGBLIGHT_VAL_STEP 12 // units to step when in/decreasing value (brightness)
+#define HOLD_ON_OTHER_KEY_PRESS
+#define TAPPING_TERM 175
