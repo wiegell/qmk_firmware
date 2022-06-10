@@ -16,7 +16,10 @@
 enum custom_keycodes {
   COL = SAFE_RANGE,
   EMPFUNC = SAFE_RANGE,
+  LSLAH,HOME,
+  DIRUP,
   THIS,
+  VOID,
   MAIL,
   SYMB,
   NAV,
@@ -39,6 +42,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
             SEND_STRING("this.");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+   case VOID:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("public void ");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+   case LSLAH:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("ls "SS_TAP(X_SLSH)"lah"SS_TAP(X_ENT));
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+   case DIRUP:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("cd .."SS_TAP(X_ENT));
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+   case HOME:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("cd ");
+          register_code(KC_ALGR);
+          SEND_STRING(SS_TAP(X_RBRC));
+          unregister_code(KC_ALGR);
+            SEND_STRING(SS_TAP(X_ENT));
+            SEND_STRING(SS_TAP(X_ENT));
         } else {
             // when keycode QMKBEST is released
         }
@@ -77,9 +117,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #define KC_SYMBS LT(_SYMB, KC_BSPC)
 #define MT_LSP MT(MOD_LSFT,KC_F18)
 #define MT_LACU MT(MOD_LALT,KC_F19)
-#define MT_LST MT(MOD_LSFT,KC_TAB)
 #define MT_LSENT MT(MOD_LSFT,KC_ENT)
-#define MT_RSOS MT(MOD_RSFT,DK_OSTR)
 #define DEVTOOLS LGUI(LALT(KC_I))
 #define DEVTS LGUI(LSFT(KC_C))
 #define KC_CTC LCTL_T(KC_F17) 
@@ -91,13 +129,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_ESC ,KC_F1    ,KC_F2    ,KC_F3    ,KC_F4    ,KC_F14    ,                                       KC_F6    ,KC_F7   ,KC_F8   ,LSG(KC_A),LSG(KC_R),KC_F11 ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     DEVTOOLS  ,DEVTS    ,KC_W    ,KC_F    ,KC_P    ,KC_G    ,KC_F14   ,                        TG(_WIN) ,KC_J    ,KC_L    ,KC_U    ,KC_Y    ,DK_AE   ,KC_F12  ,
+     DEVTOOLS  ,DEVTS    ,KC_W    ,KC_F    ,KC_P    ,KC_G    ,KC_F14   ,                        TG(_WIN) ,KC_J    ,KC_L    ,KC_U    ,KC_Y    ,DK_MINS   ,KC_F12  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      LGUI(KC_Z) ,KC_Q    ,KC_R    ,KC_S    ,KC_T     ,KC_D    ,KC_LBRC ,                          KC_TAB  ,KC_H    ,KC_N    ,KC_E    ,KC_I    ,DK_AE ,DK_ARNG ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     MT_LST ,KC_A      ,KC_X    ,KC_C   ,KC_V   ,KC_B    ,KC_NAPD ,KC_ADPU ,        LGUI(KC_Z) ,KC_RGUI ,KC_K    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_O ,MT_RSOS ,
+     KC_TAB ,KC_A      ,KC_X    ,KC_C   ,KC_V   ,KC_B    ,KC_NAPD ,KC_ADPU ,        LGUI(KC_Z) ,KC_RGUI ,KC_K    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_O ,DK_OSTR ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     KC_CTC ,KC_Z ,KC_PMNS ,MT_LACU ,         KC_GTP ,  KC_SYMBS ,MT_LSP         ,MT_LSENT ,KC_NAMS     ,KC_NUMD ,  LGUI(KC_S) ,LGUI(KC_T) ,KC_SLSH   ,LGUI(KC_F) 
+     KC_CTC ,KC_Z ,KC_PMNS ,MT_LACU ,         KC_GTP ,  KC_SYMBS ,MT_LSP         ,MT_LSENT ,KC_NAMS     ,KC_NUMD ,  RGUI(KC_S) ,RGUI(KC_T) ,RGUI(KC_W)   ,RGUI(KC_F) 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -105,11 +143,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______ ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,                                            KC_F6   ,KC_F7   ,KC_F8   ,KC_F9   ,KC_F10  ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,_______ ,DK_AMPR ,DK_MINS ,DK_PLUS ,DK_TILD ,KC_TRNS,                            KC_TRNS,DK_HASH ,DK_QUES ,DK_ASTR ,ALGR(KC_I),_______,XXXXXXX ,
+     _______ ,_______ ,DK_AMPR ,_______ ,_______ ,DK_TILD ,KC_TRNS,                            KC_TRNS,DK_HASH ,DK_QUES ,DK_ASTR ,ALGR(KC_I),_______,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______ ,DK_PERC,DK_LBRC,DK_LPRN ,DK_HALF ,DK_DQUO ,KC_TRNS                            ,KC_TRNS,DK_QUOT ,DK_SECT ,DK_RPRN ,DK_RBRC ,DK_MINS,XXXXXXX ,
+     _______ ,DK_PERC,DK_LPRN,DK_LBRC ,DK_HALF ,DK_DQUO ,KC_TRNS                            ,KC_TRNS,DK_QUOT ,DK_SECT ,DK_RBRC ,DK_RPRN ,_______,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     MAIL    ,LSA(DK_8),ALGR(DK_QUOT),DK_SLSH,DK_EQL,THIS   ,KC_TRNS ,KC_TRNS          ,KC_TRNS ,KC_TRNS,LSFT(DK_ACUT) ,DK_EXLM ,DK_BSLS ,DK_SCLN ,LSA(DK_9) , XXXXXXX ,
+     MAIL    ,LSA(DK_8),ALGR(DK_QUOT),DK_SLSH,_______,VOID   ,KC_TRNS ,KC_TRNS          ,KC_TRNS ,KC_TRNS,LSFT(DK_ACUT) ,DK_EXLM ,DK_EQL ,DK_PLUS ,LSA(DK_9) , XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      _______ ,EMPFUNC ,_______ ,_______ ,     _______ ,    _______ ,_______ ,        _______ ,_______ ,   _______   ,   _______  ,_______ ,DK_LABK ,_______ 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
@@ -118,13 +156,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,                                            _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,KC_MS_U ,XXXXXXX ,KC_WH_D ,XXXXXXX ,_______ ,                          _______ ,XXXXXXX ,LGUI(KC_BSPC),LALT(KC_BSPC),LALT(KC_DEL),XXXXXXX ,RESET ,
+     XXXXXXX ,XXXXXXX ,KC_MS_U ,XXXXXXX ,KC_WH_D ,XXXXXXX ,_______ ,                          _______ ,HOME ,LGUI(KC_BSPC),LALT(KC_BSPC),LALT(KC_DEL),XXXXXXX ,RESET ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,KC_MS_L ,KC_MS_D ,KC_MS_R ,KC_WH_U ,XXXXXXX ,_______ ,                          _______ ,XXXXXXX ,KC_LEFT ,KC_DOWN ,KC_UP   ,LGUI(KC_DEL) ,XXXXXXX ,
+     XXXXXXX ,KC_MS_L ,KC_MS_D ,KC_MS_R ,KC_WH_U ,XXXXXXX ,_______ ,                          _______ ,DIRUP ,KC_LEFT ,KC_DOWN ,KC_UP   ,LGUI(KC_DEL) ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,_______ ,_______ ,        _______ ,XXXXXXX ,XXXXXXX ,LGUI(KC_LEFT),LALT(KC_LEFT),LALT(KC_RIGHT),KC_RIGHT ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,_______ ,_______ ,        _______ ,XXXXXXX ,LSLAH ,LGUI(KC_LEFT),LALT(KC_LEFT),LALT(KC_RIGHT),KC_RIGHT ,XXXXXXX ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,KC_LALT ,     MT_CMDDD ,    KC_BTN1 ,KC_BTN2 ,        _______ ,_______ ,    XXXXXXX ,   LCTL(KC_C) ,XXXXXXX ,LGUI(KC_RIGHT) ,XXXXXXX 
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,KC_LALT ,     KC_GTP ,    _______ ,_______ ,        _______ ,_______ ,    XXXXXXX ,   LCTL(KC_C) ,XXXXXXX ,LGUI(KC_RIGHT) ,XXXXXXX 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
@@ -164,7 +202,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      C(KC_Z) ,KC_Q    ,KC_R    ,KC_S    ,KC_T    ,KC_D    ,KC_SLCK                            ,KC_PAUS,KC_H    ,KC_N    ,KC_E    ,KC_I    ,DK_AE    ,DK_ARNG ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT ,KC_A    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,KC_NAPD   ,_______        ,_______ ,KC_RGUI ,KC_K    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_O  ,MT_RSOS ,
+     KC_LSFT ,KC_A    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,KC_NAPD   ,_______        ,_______ ,KC_RGUI ,KC_K    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_O  ,DK_OSTR ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
      KC_LCTRL ,KC_Z ,KC_PMNS ,C(KC_X) ,   KC_LALT ,        KC_SYMBS ,MT_LSP          ,MT_LSENT ,KC_NAMS     ,KC_NAME ,  G(KC_S),G(KC_T),KC_SLSH,C(KC_F) 
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
